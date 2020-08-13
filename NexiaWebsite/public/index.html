@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Klingler AC Project</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="page-container">
+        <div class="content-wrap">
+
+            <header class="main-header">
+                <h1 class="title">Klingler Air Conditioner Project</h1>
+                <nav class="nav main-nav">
+                    <ul>
+                        <li><a href="index.html">HOME</a></li>
+                        <li><a href="days.html">DAILY</a></li>
+                        <li><a href="months.html">MONTHLY</a></li>
+                    </ul>
+                </nav>
+            </header>
+
+            <section class="content-section container">
+                <h2 class="section-header">ABOUT</h2>
+                <p>
+                    This project began with a conversation I had with my dad about
+                    the useless compressor usage graph provided by his relatively
+                    new AC unit. It only showed him whether the compressor was on
+                    or off, not what percentage the compressor was running at. I
+                    casually mentioned that it wouldn't be that difficult to setup
+                    a simple web scraper to get the compressor percentage every fifteen
+                    minutes, store it in a database, and create some graphs from
+                    that data. Well turns out it was a little more difficult than
+                    that because MyNexia does not display compressor percentage on
+                    their web portal. They did however, display the percentage on
+                    their android app. So one decompressed apk later and a few hours
+                    of reverse engineering their api calls, I was able to programmatically
+                    get the compressor percentage with an http call.
+                </p>
+
+                <p>
+                    This project is powered completely by the Google Cloud Platform.
+                    I have one Google Cloud Function that queries the current compressor
+                    percentage and outdoor temperature every fifteen minutes. That data
+                    is then stored in the Firebase nosql database Firestore. This website
+                    is being hosted using Firebase Hosting.
+                </p>
+            </section>
+
+        </div>
+
+
+        <footer class="main-footer">
+            <!--TODO make link to actual github repo-->
+            <img src="images/githubLogo.png">
+            <a class="footer-header" href="https://github.com/deweydbb" target="_blank">View Project on Github</a>
+        </footer>
+
+    </div>
+
+
+</body>
+
+</html>

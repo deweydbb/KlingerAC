@@ -1,0 +1,9 @@
+NexiaTest/
+*.png
+nexiaInfo.json
+NexiaCloud/keys.txt
+NexiaCloud/nexiaAdmin.json
+NexiaCloud/.idea
+NexiaWebsite/.firebase
+NexiaWebstie/.firebaserc
+NexiaWebsite/.firebase.json

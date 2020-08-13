@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel&family=Cormorant+Upright:wght@300&family=Courgette&display=swap');
+* {
+    box-sizing: border-box;
+    font-family: Lora, serif;
+    color: #666
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+.nav ul {
+    margin: 0;
+}
+
+.nav li {
+    display: inline;
+}
+
+.nav a {
+    display: inline-block;
+    padding: .5em;
+    color: white;
+    text-decoration: none;
+}
+
+.nav a:hover {
+    background-color: rgba(255, 255, 255, .3);
+    text-decoration: underline;
+}
+
+.main-nav {
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: lighter;
+    border-top: 1px solid rgba(255, 255, 255, .3);
+}
+
+.main-nav li {
+    padding: 0 2%;
+}
+
+.main-header {
+    background-color: rgb(64, 55, 110);
+}
+
+.title {
+    padding-bottom: 20px;
+    text-align: center;
+    margin: 0;
+    font-size: 4em;
+    color: white;
+    font-family: 'Cormorant Upright', serif;
+}
+
+.page-container {
+    position: relative;
+    min-height: 100vh;
+}
+
+.content-wrap {
+    padding-bottom: 4em;
+}
+
+.content-section {
+    margin: 1em;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1.5em;
+}
+
+.curve-container {
+    margin: 0 auto;
+    padding: 0 1.5em;
+}
+
+.section-header {
+    color: #333;
+    text-align: left;
+    font-size: 2.5em;
+}
+
+.main-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    background-color: rgb(168, 160, 207);
+    padding: .25em 1em;
+    font-size: 1em;
+    align-items: center;
+}
+
+.footer-header {
+    color: #333;
+    padding: 1em 0;
+}
+
+.main-footer img {
+    margin: 0 .5em;
+    width: 30px;
+    height: 30px;
+}
+
+#loading_curve{
+    text-align: center;
+}
+
+#curve_chart {
+    min-height: 20em;
+}
+
+.form-container{
+    text-align: center;
+}
+
+#test{
+    display: inline-block;
+    color: #333;
+    padding: .25em;
+}
+
+#form{
+    display: inline-block;
+    color: #333;
+}
