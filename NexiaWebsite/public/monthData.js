@@ -104,7 +104,9 @@ function drawChart() {
         var options = {
             legend: { position: 'bottom' },
             hAxis: { format: 'dd' },
-            animation: { "startup": true },
+            vAxis: {
+                minValue: 0,
+            },
         };
 
         var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
