@@ -56,6 +56,8 @@ public class main implements BackgroundFunction<PubSubMessage> {
         }
     }
 
+    // given new data to add to list of percentages, get list and append new data to
+    // end of the list
     private static void updateDatabase(Map<String, Object> dataToAdd) {
         try {
             // get the document path of the correct document based on the day
@@ -73,55 +75,90 @@ public class main implements BackgroundFunction<PubSubMessage> {
 
             double averageCompressorSpeed = getAvgCompPer(list);
             double averageOutdoorTemp = getAverageOutdoorTemp(list);
-
             HashMap<String, Object> dataToSave = new HashMap<>();
             dataToSave.put("percentages", list);
             dataToSave.put("avgCompSpeed", averageCompressorSpeed);
             dataToSave.put("avgTemp", averageOutdoorTemp);
+            dataToSave.put("year", getYear());
+            dataToSave.put("month", getMonth());
 
             // save document to database
-
             docRef.set(dataToSave).get();
         } catch (Exception e) {
             System.out.println(e);
         }
     }
 
+    // returns an int that represents the current year in Chicago
+    private static int getYear() {
+        LocalDateTime now = LocalDateTime.now(ZoneId.of("America/Chicago"));
+
+        return now.getYear();
+    }
+
+    // returns an int that represents the current month. [1-12]
+    private static int getMonth() {
+        LocalDateTime now = LocalDateTime.now(ZoneId.of("America/Chicago"));
+
+        return now.getMonthValue();
+    }
+
+    // returns the average compressor percentage for the day so far
+    // between 0 and 1.0
     private static double getAvgCompPer(List data) {
         double sum = 0;
-
+        int size = data.size();
+        // loop through all data points in the list
         for (int i = 0; i < data.size(); i++) {
             Map<String, Object> firstPoint = (Map) data.get(i);
 
             Object firstPerObj = firstPoint.get("percentage");
             double percentage;
+            // when percentage is 1, java reads it as a long
+            // and so casting it as an double creates an exception
+            // so it is necessary to type check
             if (firstPerObj instanceof Double) {
                 percentage = (double) firstPerObj;
             } else {
                 percentage = (long) firstPerObj;
             }
-
-            sum += percentage;
+            // if the percentage is not valid, do not count it in the average
+            if (percentage < 0) {
+                size--;
+            } else {
+                sum += percentage;
+            }
         }
-
-        return sum / data.size();
+        // make sure the number of valid percentages is not 0
+        // to avoid division by 0
+        if (size > 0) {
+            return sum / size;
+        }
+        // signifies no valid percentages for the day
+        return -1;
     }
 
+    // returns a double that is the average of the outdoor temperature for the
+    // current day
     private static double getAverageOutdoorTemp(List data) {
         double sum = 0;
         int size = data.size();
-
+        // loop through all the points recorded so far today
         for (int i = 0; i < data.size(); i++) {
             Map<String, Object> point = (Map) data.get(i);
             Object tempObj = point.get("outdoorTemp");
 
             double temp;
+            // when percentage is a whole number, java reads it as a long
+            // and so casting it as an double creates an exception
+            // so it is necessary to type check
             if (tempObj instanceof Double) {
                 temp = (double) tempObj;
             } else {
                 temp = (long) tempObj;
             }
-
+            // check that the temp is valid before counting
+            // it in the  average
             if (temp != -100) {
                 sum += temp;
             } else {
@@ -133,8 +170,8 @@ public class main implements BackgroundFunction<PubSubMessage> {
         if (size > 0) {
             return sum / size;
         }
-
-        return 0;
+        // signifies no valid temperatures readings for the day
+        return -100;
     }
 
     // returns the path to the correct document based on the day. Format: data/YYYY_MM_DD
