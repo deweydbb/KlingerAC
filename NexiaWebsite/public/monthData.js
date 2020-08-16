@@ -38,10 +38,48 @@ async function getData() {
     var split = getDateForGraph().split("_");
     var beginning = split[0] + "_" + split[1] + "_";
 
-
-
     var result = [["Time", "Avg Comp Percentage", "Avg Outdoor Temp"]];
 
+
+    var dataCollRef = db.collection("data");
+
+    var query = await dataCollRef.where("month", "==", parseInt(split[1])).where("year", "==", parseInt(split[0])).get();
+
+    query.forEach(function (doc) {
+        try {
+
+            var date = new Date();
+            date.setFullYear(parseInt(split[0]));
+            date.setMonth(parseInt(split[1]) - 1);
+            date.setHours(12);
+            date.setMinutes(0);
+            date.setSeconds(0);
+            date.setMinutes(0);
+            date.setDate(doc.data().day);
+            var point = [date];
+
+            if (doc.get('avgCompSpeed') != null) {
+                point.push(doc.data().avgCompSpeed * 100);
+            } else {
+                return;
+            }
+
+            if (doc.get('avgTemp') != null) {
+                point.push(doc.data().avgTemp);
+            } else {
+                return;
+            }
+            console.log(point);
+            result.push(point);
+
+
+        } catch (err) {
+            console.log(err);
+        }
+    });
+
+
+    /*
     for (var i = 0; i < 31; i++) {
         var docName = beginning + i;
         var docRef = db.collection("data").doc(docName);
@@ -79,6 +117,8 @@ async function getData() {
             console.log(err);
         }
     }
+
+    */
 
     if (result.length == 1) {
         return null;
