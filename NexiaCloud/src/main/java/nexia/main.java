@@ -81,6 +81,7 @@ public class main implements BackgroundFunction<PubSubMessage> {
             dataToSave.put("avgTemp", averageOutdoorTemp);
             dataToSave.put("year", getYear());
             dataToSave.put("month", getMonth());
+            dataToSave.put("day", getDay());
 
             // save document to database
             docRef.set(dataToSave).get();
@@ -101,6 +102,12 @@ public class main implements BackgroundFunction<PubSubMessage> {
         LocalDateTime now = LocalDateTime.now(ZoneId.of("America/Chicago"));
 
         return now.getMonthValue();
+    }
+
+    private static int getDay() {
+        LocalDateTime now = LocalDateTime.now(ZoneId.of("America/Chicago"));
+
+        return now.getDayOfMonth();
     }
 
     // returns the average compressor percentage for the day so far
