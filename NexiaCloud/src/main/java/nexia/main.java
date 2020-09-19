@@ -190,7 +190,12 @@ public class main implements BackgroundFunction<PubSubMessage> {
         int month = localTime.getMonthValue();
         int day = localTime.getDayOfMonth();
 
-        return String.format("data/%d_%d_%d", year, month, day);
+        String dayString = day + "";
+        if (dayString.length() == 1) {
+            dayString = "0" + dayString;
+        }
+
+        return String.format("data/%d_%d_%s", year, month, dayString);
     }
 
     // make api call to MyNexia. return json response body as string,
