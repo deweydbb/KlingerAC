@@ -22,7 +22,7 @@ function getDocName() {
         var split = dateParam.split("-");
         var year = parseInt(split[0]);
         var month = parseInt(split[1]);
-        var day = parseInt(split[2]);
+        var day = split[2];
 
         return year + '_' + month + '_' + day;
     } else {
@@ -31,7 +31,12 @@ function getDocName() {
         var month = date.getMonth() + 1;
         var day = date.getDate();
 
-        return year + '_' + month + '_' + day;
+        var dayString = day + "";
+        if (dayString.length == 1) {
+            dayString = "0" + dayString;
+        }
+
+        return year + '_' + month + '_' + dayString;
     }
 }
 
